@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#08050d">
+  <title>Donde mi amor sabe esperarte</title>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Sans:wght@400;500;600&display=swap');
+
+    :root {
+      --bg: #08050d;
+      --bg2: #110916;
+      --paper: #17101d;
+      --paper-light: #21152a;
+      --text: #f8eef9;
+      --muted: #cdbbcf;
+      --violet: #b967ff;
+      --violet-bright: #d79aff;
+      --violet-soft: rgba(185, 103, 255, 0.16);
+      --line: rgba(215, 154, 255, 0.22);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at 15% 15%, rgba(185,103,255,.13), transparent 30%),
+        radial-gradient(circle at 85% 75%, rgba(130,55,180,.12), transparent 34%),
+        linear-gradient(145deg, var(--bg), var(--bg2) 50%, #09050e);
+      color: var(--text);
+      font-family: "DM Sans", sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* Atmósfera flotante */
+    .atmosphere {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 0;
+    }
+
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(35px);
+      opacity: .22;
+      animation: drift 12s ease-in-out infinite alternate;
+    }
+
+    .orb.one {
+      width: 180px;
+      height: 180px;
+      background: #a84cff;
+      top: 8%;
+      left: -60px;
+    }
+
+    .orb.two {
+      width: 230px;
+      height: 230px;
+      background: #7020a5;
+      right: -90px;
+      top: 42%;
+      animation-delay: -4s;
+    }
+
+    .orb.three {
+      width: 150px;
+      height: 150px;
+      background: #d56cff;
+      bottom: -50px;
+      left: 30%;
+      animation-delay: -7s;
+    }
+
+    @keyframes drift {
+      from {
+        transform: translate3d(0,0,0) scale(1);
+      }
+      to {
+        transform: translate3d(25px,-30px,0) scale(1.12);
+      }
+    }
+
+    /* Pequeños destellos */
+    .sparkles {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .spark {
+      position: absolute;
+      width: 3px;
+      height: 3px;
+      border-radius: 50%;
+      background: #e5b8ff;
+      box-shadow: 0 0 12px #c879ff;
+      opacity: .35;
+      animation: twinkle 4s ease-in-out infinite;
+    }
+
+    .spark:nth-child(1) { left: 12%; top: 18%; animation-delay: .2s; }
+    .spark:nth-child(2) { left: 79%; top: 13%; animation-delay: 1.2s; }
+    .spark:nth-child(3) { left: 91%; top: 63%; animation-delay: 2s; }
+    .spark:nth-child(4) { left: 7%; top: 71%; animation-delay: 2.8s; }
+    .spark:nth-child(5) { left: 48%; top: 8%; animation-delay: 1.7s; }
+    .spark:nth-child(6) { left: 64%; top: 89%; animation-delay: .8s; }
+
+    @keyframes twinkle {
+      0%, 100% {
+        opacity: .15;
+        transform: scale(.7);
+      }
+      50% {
+        opacity: .85;
+        transform: scale(1.5);
+      }
+    }
+
+    main {
+      position: relative;
+      z-index: 2;
+      width: min(920px, 92%);
+      margin: 0 auto;
+      padding: 55px 0 70px;
+    }
+
+    /* Introducción */
+    .opening {
+      min-height: 72vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      animation: appear 1.5s ease both;
+    }
+
+    .date {
+      font-size: .78rem;
+      letter-spacing: .34em;
+      text-transform: uppercase;
+      color: var(--violet-bright);
+      margin-bottom: 24px;
+      opacity: .9;
+    }
+
+    .number {
+      font-family: "Cormorant Garamond", serif;
+      font-size: clamp(6rem, 25vw, 12rem);
+      line-height: .72;
+      font-weight: 600;
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(215,154,255,.38);
+      text-shadow: 0 0 55px rgba(185,103,255,.12);
+      animation: numberFloat 5s ease-in-out infinite;
+    }
+
+    @keyframes numberFloat {
+      0%,100% { transform: translateY(0); }
+      50% { transform: translateY(-9px); }
+    }
+
+    .opening-line {
+      max-width: 620px;
+      margin-top: 38px;
+      color: var(--muted);
+      font-family: "Cormorant Garamond", serif;
+      font-size: clamp(1.25rem, 4vw, 1.8rem);
+      font-style: italic;
+      line-height: 1.45;
+    }
+
+    .scroll-hint {
+      margin-top: 55px;
+      color: rgba(255,255,255,.42);
+      font-size: .7rem;
+      letter-spacing: .28em;
+      text-transform: uppercase;
+      animation: pulse 2.5s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      50% { opacity: .35; transform: translateY(5px); }
+    }
+
+    /* Carta */
+    .letter-shell {
+      position: relative;
+      margin: 15px auto 0;
+      max-width: 790px;
+    }
+
+    .letter-shell::before {
+      content: "";
+      position: absolute;
+      inset: 16px -10px -16px;
+      border: 1px solid rgba(185,103,255,.10);
+      border-radius: 28px;
+      transform: rotate(-1deg);
+      pointer-events: none;
+    }
+
+    .letter {
+      position: relative;
+      background:
+        linear-gradient(135deg, rgba(255,255,255,.035), transparent 35%),
+        linear-gradient(180deg, rgba(185,103,255,.045), transparent 35%),
+        var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 25px;
+      padding: clamp(28px, 6vw, 62px);
+      box-shadow:
+        0 30px 90px rgba(0,0,0,.48),
+        0 0 50px rgba(135,50,190,.08);
+      overflow: hidden;
+      animation: letterIn 1.2s .3s ease both;
+    }
+
+    @keyframes letterIn {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .letter::after {
+      content: "24";
+      position: absolute;
+      right: 25px;
+      top: 12px;
+      font-family: "Cormorant Garamond", serif;
+      font-size: 7rem;
+      font-weight: 600;
+      color: rgba(185,103,255,.035);
+      pointer-events: none;
+    }
+
+    .title {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      margin-bottom: 34px;
+    }
+
+    .title p {
+      font-family: "Cormorant Garamond", serif;
+      font-size: clamp(1.7rem, 5vw, 2.7rem);
+      line-height: 1.15;
+      font-weight: 600;
+      color: #fff4ff;
+      text-shadow: 0 0 22px rgba(185,103,255,.18);
+    }
+
+    .title::after {
+      content: "✦";
+      display: block;
+      margin-top: 18px;
+      color: var(--violet-bright);
+      font-size: .9rem;
+      opacity: .8;
+    }
+
+    .letter-body {
+      position: relative;
+      z-index: 2;
+    }
+
+    .letter-body p {
+      margin: 0 0 24px;
+      font-family: "Cormorant Garamond", serif;
+      font-size: clamp(1.18rem, 3.6vw, 1.4rem);
+      line-height: 1.75;
+      color: #f5eaf6;
+    }
+
+    .letter-body p strong {
+      color: #ffffff;
+      font-weight: 700;
+    }
+
+    .letter-body p:first-child {
+      color: var(--violet-bright);
+      font-size: clamp(1.3rem, 4vw, 1.55rem);
+      margin-bottom: 28px;
+    }
+
+    .letter-body p:last-child {
+      margin-bottom: 0;
+    }
+
+    .signature {
+      margin-top: 42px;
+      padding-top: 28px;
+      border-top: 1px solid rgba(215,154,255,.13);
+      text-align: right;
+    }
+
+    .signature p {
+      font-family: "Cormorant Garamond", serif;
+      font-size: 1.45rem;
+      font-style: italic;
+      color: #ead8ef;
+    }
+
+    /* Frase final */
+    .final-love {
+      margin: 75px auto 45px;
+      max-width: 760px;
+      text-align: center;
+      padding: 40px 25px;
+      position: relative;
+    }
+
+    .final-love::before,
+    .final-love::after {
+      content: "✦";
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--violet-bright);
+      font-size: .8rem;
+      opacity: .8;
+    }
+
+    .final-love::before { left: 0; }
+    .final-love::after { right: 0; }
+
+    .final-love p {
+      font-family: "Cormorant Garamond", serif;
+      font-size: clamp(1.35rem, 4.5vw, 1.8rem);
+      line-height: 1.6;
+      font-style: italic;
+      color: #f8eaff;
+    }
+
+    .final-love strong {
+      display: block;
+      margin-top: 24px;
+      font-family: "DM Sans", sans-serif;
+      font-size: clamp(.8rem, 2.8vw, 1rem);
+      letter-spacing: .22em;
+      color: #d9a0ff;
+      text-shadow: 0 0 16px rgba(185,103,255,.75);
+      font-weight: 600;
+    }
+
+    /* Botón poema */
+    .poem-area {
+      display: flex;
+      justify-content: center;
+      padding: 15px 0 20px;
+    }
+
+    .poem-button {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      min-height: 58px;
+      padding: 0 28px;
+      border-radius: 999px;
+      border: 1px solid rgba(215,154,255,.5);
+      background: rgba(185,103,255,.09);
+      color: #f9edff;
+      text-decoration: none;
+      font-family: "DM Sans", sans-serif;
+      font-size: .9rem;
+      letter-spacing: .05em;
+      box-shadow:
+        0 0 25px rgba(185,103,255,.10),
+        inset 0 0 20px rgba(185,103,255,.04);
+      transition: transform .35s ease, background .35s ease, box-shadow .35s ease;
+      overflow: hidden;
+    }
+
+    .poem-button::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        110deg,
+        transparent 20%,
+        rgba(255,255,255,.16) 50%,
+        transparent 80%
+      );
+      transform: translateX(-120%);
+      transition: transform .7s ease;
+    }
+
+    .poem-button:hover {
+      transform: translateY(-4px);
+      background: rgba(185,103,255,.17);
+      box-shadow:
+        0 10px 35px rgba(185,103,255,.20),
+        0 0 30px rgba(185,103,255,.12);
+    }
+
+    .poem-button:hover::before {
+      transform: translateX(120%);
+    }
+
+    footer {
+      text-align: center;
+      padding-top: 35px;
+      color: rgba(255,255,255,.28);
+      font-size: .68rem;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+    }
+
+    @keyframes appear {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 600px) {
+      main {
+        width: min(92%, 920px);
+        padding-top: 25px;
+      }
+
+      .opening {
+        min-height: 68vh;
+      }
+
+      .number {
+        font-size: 8rem;
+      }
+
+      .letter {
+        border-radius: 20px;
+        padding: 29px 22px;
+      }
+
+      .letter-body p {
+        line-height: 1.68;
+      }
+
+      .letter-shell::before {
+        inset: 10px -5px -10px;
+      }
+
+      .final-love {
+        padding: 35px 18px;
+      }
+
+      .final-love::before {
+        left: -4px;
+      }
+
+      .final-love::after {
+        right: -4px;
+      }
+
+      .poem-button {
+        width: 100%;
+        max-width: 330px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: .01ms !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="atmosphere" aria-hidden="true">
+    <div class="orb one"></div>
+    <div class="orb two"></div>
+    <div class="orb three"></div>
+  </div>
+
+  <div class="sparkles" aria-hidden="true">
+    <span class="spark"></span>
+    <span class="spark"></span>
+    <span class="spark"></span>
+    <span class="spark"></span>
+    <span class="spark"></span>
+    <span class="spark"></span>
+  </div>
+
+  <main>
+
+    <section class="opening">
+      <p class="date">Jueves · 24 de septiembre · 2026</p>
+
+      <div class="number">24</div>
+
+      <p class="opening-line">
+        Un pequeño pedacito de mi amor esperándote,
+        sin importar cuándo decidas abrirlo.
+      </p>
+
+      <p class="scroll-hint">para ti, cuando quieras leerme ↓</p>
+    </section>
+
+
+    <section class="letter-shell">
+
+      <article class="letter">
+
+        <div class="title">
+          <p>✦ DONDE MI AMOR SABE ESPERARTE ✦</p>
+        </div>
+
+        <div class="letter-body">
+
+          <p><strong>Mi Dulce Guardiana de Mis Latidos:</strong></p>
+
+          <p>Mañana número veinticuatro en la que te escribo, preciosa. ❤️</p>
+
+          <p>Estos días no te he escrito, pero jamás ha sido porque no quisiera hacerlo. Pensé que estabas demasiado ocupada cuidando de nuestro hermoso hijito Noah, ese precioso gatito que tú y tu hermana rescataron, y que ahora ocupa un pedacito tan bonito de tu corazón.</p>
+
+          <p>Pero también me hiciste entender algo, mi princesa: no necesito que leas mis cartas el mismo día ni a la misma hora en que te las preparo. Puedes leerlas cuando tú quieras, cuando tengas un momento para ti. Y ¿sabes qué? Me encanta saber que mi amor puede esperarte.</p>
+
+          <p>Porque aunque hayan pasado algunos días, <strong>lo que siento por ti no ha disminuido ni un poquito.</strong> Al contrario, cada día contigo sigue siendo demasiado hermoso para mí. Solo me hubiera gustado poder compartir más tiempo a tu lado, especialmente esas noches que tanto deseo vivir contigo… ojalá llegue pronto el día en que podamos dormir juntos y simplemente tenernos cerquita.</p>
+
+          <p>Y mientras tanto, aquí estoy, mi niña, incluso con esta bendita gripa que me tiene malito. Pero no me importa. Si al final termino enfermándome por estar contigo, habría valido completamente la pena. Y si algún día eres tú quien se enferma, tampoco voy a irme: <strong>voy a quedarme a tu lado, cuidándote y queriéndote como siempre.</strong></p>
+
+          <p>Así que si hoy lees esto al despertar, al mediodía, en la tarde o cuando termine tu día, quiero que encuentres aquí un pedacito de mí esperándote.</p>
+
+          <p>Y que nunca se te olvide, preciosa:</p>
+
+          <p><strong>te amo demasiado.</strong> Más de lo que a veces sé explicar, más de lo que estas pequeñas cartas alcanzan a decir y muchísimo más de lo que cualquier día podría contener.</p>
+
+          <div class="signature">
+            <p>Siempre tú, mi amor. ❤️</p>
+          </div>
+
+        </div>
+
+      </article>
+
+    </section>
+
+
+    <section class="final-love">
+
+      <p>
+        Si alguna vez dudas de cuánto te amo, vuelve a este pequeño rincón y recuerda que, incluso cuando no escribo, mi corazón sigue pronunciando tu nombre; porque puedo esperar tus tiempos, tus momentos y tus días, pero jamás podría dejar de elegirte con todo lo que soy.
+      </p>
+
+      <strong>VALERIA PETRO VILLAZÓN</strong>
+
+    </section>
+
+
+    <section class="poem-area">
+
+      <!-- Cambia "poema-24.html" por el nombre exacto del archivo de tu poema -->
+      <a class="poem-button" href="https://j8753741-eng.github.io/Jueves-24-de-septiembre-del-2026---poema/">
+        ✦ Abrir el poema de esta mañana ✦
+      </a>
+
+    </section>
+
+
+    <footer>
+      Preparado para ti · 24 · septiembre · 2026
+    </footer>
+
+  </main>
+
+</body>
+</html>
